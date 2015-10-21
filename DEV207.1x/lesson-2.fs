@@ -14,6 +14,7 @@ let main argv =
     printf "Enter your age: "
     let age = Console.ReadLine()
     match Int32.TryParse(age) with
+    | (false, _) -> printfn "The given age is not an age."
+    | (true, age) when age < 0 -> printfn "The given age is incorrect."
     | (true, age) -> printfn "%s: %s." name (out age)
-    | (false, _) -> printfn "The given age is not a correct integer."
     0
