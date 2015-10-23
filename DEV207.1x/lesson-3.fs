@@ -5,9 +5,9 @@ open System
 let phi = (1.0 + Math.Sqrt(5.0)) / 2.0
 
 // Utilities
-let inline dup x = (x, x)
-let inline map f (a, b) = (f a, f b)
-let inline mapRight f (a, b) = (a, f b)
+let dup x = (x, x)
+let map f (a, b) = (f a, f b)
+let mapRight f (a, b) = (a, f b)
 
 [<EntryPoint>] 
 let main argv =
