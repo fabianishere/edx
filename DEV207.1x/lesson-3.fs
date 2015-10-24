@@ -9,7 +9,7 @@ let main argv =
             printf "Enter numbers separated by spaces: "
             Console.ReadLine().Split(' ')
             |> Seq.filter (Double.TryParse >> fst)
-            |> Seq.map (float >> fun x -> (x, x * phi))
+            |> Seq.map (float >> fun x -> x, x * phi)
             |> Seq.toList
             |> printfn "%A"
             0
