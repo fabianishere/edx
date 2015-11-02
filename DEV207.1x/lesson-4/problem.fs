@@ -9,16 +9,16 @@ type Shot = {
 }
 
 let g = 9.81
-let angle x y = atan (y / x)
-let angleOfReach distance speed = 0.5 * asin((g * distance) / (pown speed 2))
-let distance speed angle = (sin 2.0 * angle) * (pown speed 2) / g
 
-let (|Hit|_|) shot = if abs(shot.angle - (angleOfReach shot.distance shot.speed)) < 0.00000001 then Some() else None
-let (|Miss|_|) shot = 
+let angle x y = atan (y / x)
+
+let angleOfReach distance speed = 0.5 * asin((g * distance) / (pown speed 2))
+
+let (|Hit|Miss|Impossible|) shot = 
     match angleOfReach shot.distance shot.speed with
-    | angle when abs(shot.angle - angle) <  0.00000001 -> Some(1.0)
-    | angle when Double.IsNaN angle -> None
-    | angle -> Some(angle)
+    | angle when abs(shot.angle - angle) <  0.00000001 -> Hit
+    | angle when Double.IsNaN angle -> Impossible
+    | angle -> Miss(angle)
 
 let ParseShot (values : string array) = { 
     angle = angle (float values.[0]) (float values.[1]);
@@ -40,7 +40,7 @@ let main argv =
                 match shot with
                 | Hit -> printfn "%s hits!" shot.name
                 | Miss(angle) -> printfn "%s misses. Angle of %f degrees required." shot.name (angle * 180.0 / Math.PI)
-                | _ -> printfn "%s is an impossible shot." shot.name
+                | Impossible -> printfn "%s is an impossible shot." shot.name
             0
         with
         | :? System.IO.FileNotFoundException ->
