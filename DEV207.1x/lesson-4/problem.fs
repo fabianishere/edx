@@ -24,7 +24,7 @@ let Result (shot, angle) =
     | angle when Double.IsNaN angle -> sprintf "%s: impossible to hit this shot" shot.name
     | _ when shot.angle = nan -> sprintf "%s: invalid angle for shot" shot.name
     | angle when abs(shot.angle - angle) < 0.00000001 -> sprintf "%s: hit" shot.name
-    | _ -> sprintf "%s: miss (angle of %f required; %f given)" shot.name (angle * 180.0/Math.PI) (shot.angle * 180.0/Math.PI)
+    | _ -> sprintf "%s: miss (angle of %f required degrees; %f degrees given)" shot.name (angle * 180.0/Math.PI) (shot.angle * 180.0/Math.PI)
 
 [<EntryPoint>]    
 let main argv = 
@@ -39,7 +39,7 @@ let main argv =
             0
         with
         | :? System.IO.FileNotFoundException ->
-            printfn "File Not Found."
+            printfn "error: file not found."
             -1
         | Failure msg ->
             printfn "error: %s" msg
