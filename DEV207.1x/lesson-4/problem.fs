@@ -9,7 +9,7 @@ type Shot = {
 }
     
 let ParseShot (values : string array) = { 
-    angle = Math.Atan(float(values.[1]) / float(values.[0]));
+    angle = atan(float(values.[1]) / float(values.[0]));
     speed = float(values.[2]); 
     distance = float(values.[3]); 
     name = values.[4] 
@@ -17,7 +17,7 @@ let ParseShot (values : string array) = {
 
 let ProcessFile path = File.ReadLines(path) |> Seq.map (fun line -> line.Split(',')) |> Seq.map ParseShot
 
-let AngleOfReach shot = (shot, 0.5 * Math.Asin((9.81 * shot.distance) / (shot.speed * shot.speed)))
+let AngleOfReach shot = (shot, 0.5 * asin((9.81 * shot.distance) / (shot.speed * shot.speed)))
 
 let Result (shot, angle) = 
     match angle with
